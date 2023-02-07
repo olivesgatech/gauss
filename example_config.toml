@@ -1,0 +1,79 @@
+[classification]
+track_statistics = false
+track_predictions = false
+track_embeddings = false # tracks badge and coreset embeddings if set to true
+track_probs = false
+model = 'resnet-18'
+loss = 'ce'
+pretrained = false
+epochs = 2
+batch_size = 128
+test_batch_size = 128
+
+[classification.optimization]
+# active learning
+lr = 0.001
+optimizer = 'adam'
+scheduler = 'multiLR'
+multiLR_steps = 2
+gamma = 0.1
+
+
+[uspec_configs]
+num_seeds = 5
+
+[run_configs]
+output_folder_name = 'run'
+ld_folder_name = 'testld_output/'
+resume = 'none'
+cuda = true
+gpu_id = 0
+train = false
+test = false
+
+# seed range for parallel running
+start_seed = 0
+end_seed = 1
+
+[run_configs.ood]
+svhn = false # only classification
+mnist = true # only classification
+cifar10 = true # only classification
+stl10 = true # only classification
+cifar10C = false
+cifar100 = false
+cinic10 = false
+
+[active_learning]
+n_start = 128
+n_end = 4000
+n_query = 1024
+strategy = 'random'
+init_seed = 0
+convergence_acc = 92.0
+save_query_idxs = false
+
+
+[active_learning.stats]
+stat_sampling_type = 'SV'
+pcal_sampling_type = 'pc'
+flip_sampling_type = 'bc'
+eventsampling_file = '~/INSERTPATH'
+probsampling_file = '~/INSERTPATH'
+embedsampling_file = '~/INSERTPATH'
+secondary_samping_type = 'entropy'
+relaxation = 1024
+
+[data]
+dataset = 'CIFAR10' # choice between MNIST, CIFAR10 etc.
+data_loc = '~/data/'
+download = false # specifies wether to download the dataset or not
+
+[data.augmentations]
+random_crop = false
+random_hflip = false
+random_rotate = false # only segmentation
+cutout = false # only classification
+
+
+
